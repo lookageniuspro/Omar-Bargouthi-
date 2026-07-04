@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المهندس عمر البرغوتي | هندسة المستقبل</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --glass-bg: rgba(255,255,255,0.04);
+            --glass-border: rgba(255,255,255,0.08);
+            --glass-highlight: rgba(255,255,255,0.12);
+            --accent: #00e5c7;
+            --accent-glow: rgba(0,229,199,0.3);
+            --accent-blue: #00b4d8;
+            --accent-purple: #7b61ff;
+            --bg-dark: #050a14;
+            --bg-card: rgba(10,20,40,0.6);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-dark);
+            color: #e0e8f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* === ANIMATED BACKGROUND === */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-scene::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            top: -200px;
+            right: -200px;
+            background: radial-gradient(circle, rgba(0,229,199,0.12) 0%, transparent 70%);
+            animation: floatOrb1 20s ease-in-out infinite;
+        }
+
+        .bg-scene::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            bottom: -100px;
+            left: -100px;
+            background: radial-gradient(circle, rgba(0,180,216,0.1) 0%, transparent 70%);
+            animation: floatOrb2 25s ease-in-out infinite;
+        }
+
+        .bg-orb-3 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(123,97,255,0.08) 0%, transparent 70%);
+            animation: floatOrb3 18s ease-in-out infinite;
+        }
+
+        @keyframes floatOrb1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-100px, 80px) scale(1.1); }
+            66% { transform: translate(50px, -60px) scale(0.9); }
+        }
+        @keyframes floatOrb2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, -60px) scale(1.15); }
+            66% { transform: translate(-40px, 40px) scale(0.95); }
+        }
+        @keyframes floatOrb3 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        /* Grid lines */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(0,229,199,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,229,199,0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+        }
+
+        /* Particles */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 0;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+        }
+
+        /* === GLASSMORPHISM === */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        }
+
+        .glass-strong {
+            background: rgba(10,20,40,0.5);
+            backdrop-filter: blur(30px) saturate(1.8);
+            -webkit-backdrop-filter: blur(30px) saturate(1.8);
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-strong::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,229,199,0.3), transparent);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,229,199,0.03) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0,229,199,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px -15px rgba(0,229,199,0.15);
+        }
+
+        .glass-card:hover::after { opacity: 1; }
+
+        /* === NAVIGATION === */
+        .nav-glass {
+            background: rgba(5,10,20,0.7);
+            backdrop-filter: blur(30px) saturate(1.8);
+            -webkit-backdrop-filter: blur(30px) saturate(1.8);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-glass.scrolled {
+            background: rgba(5,10,20,0.9);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .nav-link {
+            position: relative;
+            color: rgba(224,232,240,0.6);
+            transition: color 0.3s;
+            padding: 8px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+            transition: width 0.3s;
+            border-radius: 1px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* === HERO === */
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(224,232,240,0.5);
+            font-weight: 300;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: var(--accent);
+            margin-right: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* === ACCENT BUTTON === */
+        .btn-accent {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, rgba(0,229,199,0.15), rgba(0,180,216,0.15));
+            border: 1px solid rgba(0,229,199,0.3);
+            border-radius: 14px;
+            color: var(--accent);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .btn-accent::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0,229,199,0.25);
+            border-color: rgba(0,229,199,0.5);
+            color: #fff;
+        }
+
+        .btn-accent:hover::before { opacity: 1; }
+        .btn-accent span, .btn-accent iconify-icon { position: relative; z-index: 1; }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 36px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            color: rgba(224,232,240,0.7);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .btn-outline:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* === SECTION STYLES === */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            background: rgba(0,229,199,0.08);
+            border: 1px solid rgba(0,229,199,0.15);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        /* === 3D VIEWER CONTAINER === */
+        .viewer-container {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(0,229,199,0.15);
+            background: rgba(0,0,0,0.4);
+            box-shadow:
+                0 0 60px rgba(0,229,199,0.08),
+                0 25px 80px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .viewer-container::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            z-index: 10;
+        }
+
+        .viewer-container iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4/3;
+            border: none;
+        }
+
+        .viewer-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,229,199,0.2);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .viewer-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,229,199,0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,229,199,0); }
+        }
+
+        /* === STATS === */
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        /* === SERVICE ICON === */
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0,229,199,0.1), rgba(0,180,216,0.05));
+            border: 1px solid rgba(0,229,199,0.1);
+            color: var(--accent);
+            font-size: 24px;
+            transition: all 0.4s;
+        }
+
+        .glass-card:hover .service-icon {
+            background: linear-gradient(135deg, rgba(0,229,199,0.2), rgba(0,180,216,0.1));
+            border-color: rgba(0,229,199,0.3);
+            box-shadow: 0 0 30px rgba(0,229,199,0.15);
+        }
+
+        /* === SCROLL ANIMATIONS === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* === DIVIDER === */
+        .glow-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,229,199,0.3), transparent);
+            border: none;
+        }
+
+        /* === TIMELINE === */
+        .timeline-line {
+            position: absolute;
+            right: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(0,229,199,0.3), transparent);
+            transform: translateX(50%);
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--accent);
+            position: absolute;
+            right: 50%;
+            transform: translateX(50%);
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(0,229,199,0.3);
+        }
+
+        /* === CONTACT FORM === */
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: #e0e8f0;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-input::placeholder { color: rgba(224,232,240,0.3); }
+
+        .form-input:focus {
+            border-color: rgba(0,229,199,0.4);
+            background: rgba(0,229,199,0.03);
+            box-shadow: 0 0 20px rgba(0,229,199,0.08);
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,229,199,0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,229,199,0.4); }
+
+        /* === MOBILE MENU === */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(5,10,20,0.95);
+            backdrop-filter: blur(30px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-menu a {
+            font-size: 24px;
+            color: rgba(224,232,240,0.7);
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover { color: var(--accent); }
+
+        /* === FLOATING SHAPES === */
+        .float-shape {
+            position: absolute;
+            border: 1px solid rgba(0,229,199,0.08);
+            border-radius: 20px;
+            animation: floatShape 15s ease-in-out infinite;
+        }
+
+        @keyframes floatShape {
+            0%, 100% { transform: rotate(0deg) translate(0, 0); }
+            25% { transform: rotate(5deg) translate(10px, -15px); }
+            50% { transform: rotate(-3deg) translate(-5px, 10px); }
+            75% { transform: rotate(2deg) translate(-10px, -5px); }
+        }
+
+        /* === TOAST === */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            z-index: 999;
+            padding: 14px 28px;
+            background: rgba(0,229,199,0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0,229,199,0.3);
+            border-radius: 14px;
+            color: var(--accent);
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* === HEXAGON PATTERN === */
+        .hex-pattern {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2300e5c7' fill-opacity='1'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line { right: 20px; }
+            .timeline-dot { right: 20px; }
+            .hero-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background Scene -->
+<div class="bg-scene">
+    <div class="bg-orb-3"></div>
+</div>
+<div class="grid-overlay"></div>
+
+<!-- Particles (generated by JS) -->
+<div id="particles"></div>
+
+<!-- Navigation -->
+<nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00e5c7] to-[#00b4d8] flex items-center justify-center">
+                <span class="text-[#050a14] font-black text-lg">ع</span>
+            </div>
+            <span class="text-white font-bold text-lg hidden sm:block">عمر البرغوتي</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#hero" class="nav-link active">الرئيسية</a>
+            <a href="#viewer" class="nav-link">عارض ثلاثي الأبعاد</a>
+            <a href="#services" class="nav-link">الخدمات</a>
+            <a href="#projects" class="nav-link">المشاريع</a>
+            <a href="#contact" class="nav-link">تواصل معي</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a href="#contact" class="btn-accent hidden sm:inline-flex" style="padding: 10px 24px; font-size: 14px;">
+                <span>ابدأ مشروعك</span>
+                <iconify-icon icon="solar:arrow-left-linear" width="16"></iconify-icon>
+            </a>
+            <button id="menuToggle" class="md:hidden text-white text-2xl" onclick="toggleMenu()">
+                <iconify-icon icon="solar:hamburger-menu-linear" width="28"></iconify-icon>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <button onclick="toggleMenu()" class="absolute top-6 left-6 text-white text-2xl">
+        <iconify-icon icon="solar:close-circle-linear" width="32"></iconify-icon>
+    </button>
+    <a href="#hero" onclick="toggleMenu()">الرئيسية</a>
+    <a href="#viewer" onclick="toggleMenu()">عارض ثلاثي الأبعاد</a>
+    <a href="#services" onclick="toggleMenu()">الخدمات</a>
+    <a href="#projects" onclick="toggleMenu()">المشاريع</a>
+    <a href="#contact" onclick="toggleMenu()">تواصل معي</a>
+</div>
+
+<!-- Main Content -->
+<main class="relative z-10">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 py-20 w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="reveal">
+                        <span class="section-label">
+                            <iconify-icon icon="solar:bolt-circle-bold-duotone" width="16"></iconify-icon>
+                            هندسة التصميم المستقبلي
+                        </span>
+                    </div>
+
+                    <h1 class="hero-title reveal reveal-delay-1">
+                        المهندس<br>عمر البرغوتي
+                    </h1>
+
+                    <div class="reveal reveal-delay-2">
+                        <p class="hero-subtitle">
+                            <span id="typingText"></span><span class="typing-cursor"></span>
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 reveal reveal-delay-3">
+                        <a href="#viewer" class="btn-accent">
+                            <span>استكشف عالمي ثلاثي الأبعاد</span>
+                            <iconify-icon icon="solar:box-minimalistic-bold-duotone" width="20"></iconify-icon>
+                        </a>
+                        <a href="#services" class="btn-outline">
+                            <span>اعرف المزيد</span>
+                            <iconify-icon icon="solar:arrow-down-linear" width="18"></iconify-icon>
+                        </a>
+                    </div>
+
+                    <!-- Mini Stats -->
+                    <div class="grid grid-cols-3 gap-6 pt-8 reveal reveal-delay-4">
+                        <div class="text-center sm:text-right">
+                            <div class="stat-number">+150</div>
+                            <div class="text-sm text-[rgba(224,232,240,0.4)] mt-1">مشروع منجز</div>
+                        </div>
+                        <div class="text-center sm:text-right">
+                            <div class="stat-number">+12</div>
+                            <div class="text-sm text-[rgba(224,232,240,0.4)] mt-1">سنة خبرة</div>
+                        </div>
+                        <div class="text-center sm:text-right">
+                            <div class="stat-number">98%</div>
+                            <div class="text-sm text-[rgba(224,232,240,0.4)] mt-1">رضا العملاء</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual -->
+                <div class="relative reveal reveal-delay-2 hidden lg:block">
+                    <div class="hex-pattern" style="top: -20px; left: -40px;"></div>
+                    <div class="hex-pattern" style="bottom: -30px; right: -20px; transform: rotate(30deg);"></div>
+
+                    <div class="glass-strong rounded-3xl p-1">
+                        <div class="relative rounded-[20px] overflow-hidden aspect-square bg-gradient-to-br from-[rgba(0,229,199,0.05)] to-[rgba(0,180,216,0.02)]">
+                            <img src="https://picsum.photos/seed/omar-engineer-futuristic/700/700.jpg"
+                                 alt="المهندس عمر البرغوتي"
+                                 class="w-full h-full object-cover opacity-60 mix-blend-luminosity">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#050a14] via-transparent to-transparent"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-[rgba(0,229,199,0.1)] to-transparent"></div>
+
+                            <!-- Floating badges -->
+                            <div class="absolute top-6 right-6 glass rounded-xl px-4 py-2 flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-[#00e5c7] animate-pulse"></div>
+                                <span class="text-xs text-[rgba(224,232,240,0.8)]">متاح للعمل</span>
+                            </div>
+
+                            <div class="absolute bottom-6 right-6 left-6">
+                                <div class="glass rounded-xl px-5 py-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-xs text-[rgba(224,232,240,0.4)]">التخصص</div>
+                                            <div class="text-sm font-bold text-white mt-1">الهندسة المعمارية والتصميم الرقمي</div>
+                                        </div>
+                                        <iconify-icon icon="solar:buildings-3-bold-duotone" width="32" style="color: var(--accent);"></iconify-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating shapes -->
+                    <div class="float-shape" style="width:80px;height:80px;top:-30px;right:-30px;animation-delay:-3s;"></div>
+                    <div class="float-shape" style="width:50px;height:50px;bottom:40px;left:-25px;animation-delay:-7s;border-radius:50%;"></div>
+                    <div class="float-shape" style="width:35px;height:35px;top:40%;left:-15px;animation-delay:-11s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Glow Divider -->
+    <hr class="glow-divider max-w-4xl mx-auto">
+
+    <!-- 3D VIEWER SECTION -->
+    <section id="viewer" class="py-32">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 space-y-6">
+                <div class="reveal">
+                    <span class="section-label">
+                        <iconify-icon icon="solar:box-minimalistic-bold-duotone" width="16"></iconify-icon>
+                        تجربة تفاعلية
+                    </span>
+                </div>
+                <h2 class="section-title reveal reveal-delay-1">عارض ثلاثي الأبعاد</h2>
+                <p class="text-[rgba(224,232,240,0.5)] max-w-2xl mx-auto reveal reveal-delay-2">
+                    استكشف التصاميم الهندسية بتجربة غامرة ثلاثية الأبعاد — تدوير، تكبير، وتفاعل كامل مع النموذج
+                </p>
+            </div>
+
+            <div class="reveal reveal-delay-2">
+                <div class="viewer-container">
+                    <div class="viewer-badge">
+                        <span class="dot"></span>
+                        <span>مباشر — 3D Interactive</span>
+                    </div>
+                    <iframe width="640" height="480" loading="lazy" title="Omar Bargouthi"
+                            src="https://viz4d.com/viewer/ZY1Yv?autoplay=0"
+                            frameborder="0"
+                            allowfullscreen
+                            mozallowfullscreen="true"
+                            webkitallowfullscreen="true"
+                            allow="autoplay;fullscreen;xr-spatial-tracking;display-capture;gamepad"
+                            xr-spatial-tracking
+                            execution-while-out-of-viewport
+                            execution-while-not-rendered
+                            web-share></iframe>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 reveal reveal-delay-3">
+                <div class="glass-card p-4 text-center">
+                    <iconify-icon icon="solar:refresh-circle-bold-duotone" width="24" style="color:var(--accent);"></iconify-icon>
+                    <div class="text-xs text-[rgba(224,232,240,0.5)] mt-2">تدوير 360°</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <iconify-icon icon="solar:magnifer-zoom-in-bold-duotone" width="24" style="color:var(--accent);"></iconify-icon>
+                    <div class="text-xs text-[rgba(224,232,240,0.5)] mt-2">تكبير وتصغير</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <iconify-icon icon="solar:hand-shake-bold-duotone" width="24" style="color:var(--accent);"></iconify-icon>
+                    <div class="text-xs text-[rgba(224,232,240,0.5)] mt-2">تفاعل مباشر</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <iconify-icon icon="solar:monitor-smartphone-bold-duotone" width="24" style="color:var(--accent);"></iconify-icon>
+                    <div class="text-xs text-[rgba(224,232,240,0.5)] mt-2">متوافق مع الأجهزة</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="glow-divider max-w-4xl mx-auto">
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 space-y-6">
+                <div class="reveal">
+                    <span class="section-label">
+                        <iconify-icon icon="solar:stars-minimalistic-bold-duotone" width="16"></iconify-icon>
+                        ما أقدمه
+                    </span>
+                </div>
+                <h2 class="section-title reveal reveal-delay-1">الخدمات الهندسية</h2>
+                <p class="text-[rgba(224,232,240,0.5)] max-w-2xl mx-auto reveal reveal-delay-2">
+                    حلول هندسية متكاملة تجمع بين الإبداع والتقنية لتحويل رؤيتك إلى واقع ملموس
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service 1 -->
+                <div class="glass-card p-8 reveal">
+                    <div class="service-icon mb-6">
+                        <iconify-icon icon="solar:buildings-3-bold-duotone" width="28"></iconify-icon>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">التصميم المعماري</h3>
+                    <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                        تصميم مباني سكنية وتجارية مبتكرة تراعي الجمال الوظيفي والاستدامة البيئية بأحدث البرامج الهندسية
+                    </p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card p-8 reveal reveal-delay-1">
+                    <div class="service-icon mb-6">
+                        <iconify-icon icon="solar:box-minimalistic-bold-duotone" width="28"></iconify-icon>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">النمذجة ثلاثية الأبعاد</h3>
+                    <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                        إنشاء نماذج ثلاثية الأبعاد دقيقة وتفاعلية للمشاريع الهندسية مع إمكانية الاستكشاف الافتراضي
+                    </p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-card p-8 reveal reveal-delay-2">
+                    <div class="service-icon mb-6">
+                        <iconify-icon icon="solar:palette-round-bold-duotone" width="28"></iconify-icon>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">التصميم الداخلي</h3>
+                    <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                        تصميم مساحات داخلية أنيقة وعملية تعكس شخصية العميل وتراعي أحدث اتجاهات التصميم العالمية
+                    </p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass-card p-8 reveal">
+                    <div class="service-icon mb-6">
+                        <iconify-icon icon="solar:map-bold-duotone" width="28"></iconify-icon>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">التخطيط العمراني</h3>
+                    <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                        تخطيط المدن والأحياء بمقاربة شاملة تراعي البنية التحتية والبيئة وجودة الحياة
+                    </p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="glass-card p-8 reveal reveal-delay-1">
+                    <div class="service-icon mb-6">
+                        <iconify-icon icon="solar:chart-2-bold-duotone" width="28"></iconify-icon>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">الإدارة الهندسية</h3>
+                    <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                        إدارة المشاريع من التخطيط حتى التسليم مع مراقبة الجودة والجدول الزمني والميزانية
+                    </p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="glass-card p-8 reveal reveal-delay-2">
+                    <div class="service-icon mb-6">
+                        <iconify-icon icon="solar:vr-bold-duotone" width="28"></iconify-icon>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">الواقع الافتراضي</h3>
+                    <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                        جولات افتراضية غامرة داخل المشاريع قبل البناء باستخدام تقنيات VR المتقدمة
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="glow-divider max-w-4xl mx-auto">
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 space-y-6">
+                <div class="reveal">
+                    <span class="section-label">
+                        <iconify-icon icon="solar:folder-favourite-bookmark-bold-duotone" width="16"></iconify-icon>
+                        أعمال مختارة
+                    </span>
+                </div>
+                <h2 class="section-title reveal reveal-delay-1">المشاريع المميزة</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <div class="glass-card overflow-hidden group reveal">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://picsum.photos/seed/arch-tower-modern/600/450.jpg"
+                             alt="برج الأفق"
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[rgba(5,10,20,0.9)] via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 right-4 left-4">
+                            <div class="text-xs text-[#00e5c7] font-medium mb-1">تجاري — 2024</div>
+                            <h3 class="text-white text-lg font-bold">برج الأفق</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                            برج مكاتب بطابق 35 بتصميم مستقبلي يوفر بيئة عمل متطورة مع واجهات زجاجية ذكية
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-card overflow-hidden group reveal reveal-delay-1">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://picsum.photos/seed/villa-luxury-pool/600/450.jpg"
+                             alt="فيلا الواحة"
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[rgba(5,10,20,0.9)] via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 right-4 left-4">
+                            <div class="text-xs text-[#00e5c7] font-medium mb-1">سكني — 2023</div>
+                            <h3 class="text-white text-lg font-bold">فيلا الواحة</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                            فيلا فاخرة بتصميم عصري يمزج بين الطابع المحلي والتصميم المعاصر مع حدائق متدرجة
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-card overflow-hidden group reveal reveal-delay-2">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://picsum.photos/seed/mall-interior-futuristic/600/450.jpg"
+                             alt="مجمع النور"
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[rgba(5,10,20,0.9)] via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 right-4 left-4">
+                            <div class="text-xs text-[#00e5c7] font-medium mb-1">تجاري — 2023</div>
+                            <h3 class="text-white text-lg font-bold">مجمع النور التجاري</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[rgba(224,232,240,0.5)] text-sm leading-relaxed">
+                            مجمع تجاري متعدد الاستخدامات بتصميم مستدام يضم محلات ومطاعم ومناطق ترفيهية
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="glow-divider max-w-4xl mx-auto">
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-32">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16 space-y-6">
+                <div class="reveal">
+                    <span class="section-label">
+                        <iconify-icon icon="solar:chat-round-dots-bold-duotone" width="16"></iconify-icon>
+                        تواصل معي
+                    </span>
+                </div>
+                <h2 class="section-title reveal reveal-delay-1">لنبدأ مشروعك القادم</h2>
+                <p class="text-[rgba(224,232,240,0.5)] max-w-2xl mx-auto reveal reveal-delay-2">
+                    أرسل لي تفاصيل مشروعك وسأتواصل معك في أقرب وقت لمناقشة الرؤية والتحويل إلى واقع
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8">
+                <!-- Contact Info -->
+                <div class="lg:col-span-2 space-y-6 reveal">
+                    <div class="glass-card p-6 flex items-start gap-4">
+                        <div class="service-icon flex-shrink-0" style="width:44px;height:44px;border-radius:12px;">
+                            <iconify-icon icon="solar:phone-calling-bold-duotone" width="22"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-sm mb-1">اتصل بي</div>
+                            <div class="text-[rgba(224,232,240,0.5)] text-sm" dir="ltr">+970 59 000 0000</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 flex items-start gap-4">
+                        <div class="service-icon flex-shrink-0" style="width:44px;height:44px;border-radius:12px;">
+                            <iconify-icon icon="solar:letter-bold-duotone" width="22"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-sm mb-1">البريد الإلكتروني</div>
+                            <div class="text-[rgba(224,232,240,0.5)] text-sm" dir="ltr">omar@bargouthi.eng</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 flex items-start gap-4">
+                        <div class="service-icon flex-shrink-0" style="width:44px;height:44px;border-radius:12px;">
+                            <iconify-icon icon="solar:map-point-bold-duotone" width="22"></iconify-icon>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-sm mb-1">الموقع</div>
+                            <div class="text-[rgba(224,232,240,0.5)] text-sm">فلسطين — رام الله</div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="flex gap-3 pt-4">
+                        <a href="#" class="glass-card w-12 h-12 flex items-center justify-center hover:!border-[rgba(0,229,199,0.4)]">
+                            <iconify-icon icon="mdi:linkedin" width="20" style="color: rgba(224,232,240,0.6);"></iconify-icon>
+                        </a>
+                        <a href="#" class="glass-card w-12 h-12 flex items-center justify-center hover:!border-[rgba(0,229,199,0.4)]">
+                            <iconify-icon icon="mdi:twitter" width="20" style="color: rgba(224,232,240,0.6);"></iconify-icon>
+                        </a>
+                        <a href="#" class="glass-card w-12 h-12 flex items-center justify-center hover:!border-[rgba(0,229,199,0.4)]">
+                            <iconify-icon icon="mdi:instagram" width="20" style="color: rgba(224,232,240,0.6);"></iconify-icon>
+                        </a>
+                        <a href="#" class="glass-card w-12 h-12 flex items-center justify-center hover:!border-[rgba(0,229,199,0.4)]">
+                            <iconify-icon icon="mdi:whatsapp" width="20" style="color: rgba(224,232,240,0.6);"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-3 reveal reveal-delay-1">
+                    <form id="contactForm" class="glass-strong rounded-2xl p-8 space-y-5">
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm text-[rgba(224,232,240,0.5)] mb-2">الاسم الكامل</label>
+                                <input type="text" class="form-input" placeholder="أدخل اسمك" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-[rgba(224,232,240,0.5)] mb-2">البريد الإلكتروني</label>
+                                <input type="email" class="form-input" placeholder="example@mail.com" dir="ltr" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[rgba(224,232,240,0.5)] mb-2">نوع المشروع</label>
+                            <select class="form-input" style="appearance:none; cursor:pointer;">
+                                <option value="" style="background:#0a1428;">اختر نوع المشروع</option>
+                                <option value="residential" style="background:#0a1428;">سكني</option>
+                                <option value="commercial" style="background:#0a1428;">تجاري</option>
+                                <option value="interior" style="background:#0a1428;">تصميم داخلي</option>
+                                <option value="3d" style="background:#0a1428;">نمذجة ثلاثية الأبعاد</option>
+                                <option value="other" style="background:#0a1428;">أخرى</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[rgba(224,232,240,0.5)] mb-2">تفاصيل المشروع</label>
+                            <textarea class="form-input" rows="5" placeholder="اكتب تفاصيل مشروعك هنا..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-accent w-full justify-center" style="padding:16px;">
+                            <span>إرسال الطلب</span>
+                            <iconify-icon icon="solar:arrow-left-linear" width="18"></iconify-icon>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="relative z-10 border-t border-[rgba(255,255,255,0.05)]">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00e5c7] to-[#00b4d8] flex items-center justify-center">
+                    <span class="text-[#050a14] font-black text-sm">ع</span>
+                </div>
+                <span class="text-[rgba(224,232,240,0.5)] text-sm">
+                    © 2025 المهندس عمر البرغوتي — جميع الحقوق محفوظة
+                </span>
+            </div>
+            <div class="flex items-center gap-2 text-[rgba(224,232,240,0.3)] text-sm">
+                <span>صُمم بـ</span>
+                <iconify-icon icon="solar:heart-bold" width="14" style="color: var(--accent);"></iconify-icon>
+                <span>وإبداع هندسي</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+    <iconify-icon icon="solar:check-circle-bold-duotone" width="20"></iconify-icon>
+    <span>تم إرسال طلبك بنجاح! سأتواصل معك قريباً</span>
+</div>
+
+<script>
+    // === PARTICLES ===
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 15) + 's';
+        p.style.animationDelay = (Math.random() * 10) + 's';
+        p.style.width = (1 + Math.random() * 3) + 'px';
+        p.style.height = p.style.width;
+        if (Math.random() > 0.5) {
+            p.style.background = '#00b4d8';
+        }
+        particlesContainer.appendChild(p);
+    }
+
+    // === TYPING EFFECT ===
+    const texts = [
+        'مهندس معماري ومصمم رقمي',
+        'خبير في النمذجة ثلاثية الأبعاد',
+        'مبدع في التصميم المستقبلي',
+        'محول الأفكار إلى واقع رقمي'
+    ];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingEl = document.getElementById('typingText');
+
+    function typeEffect() {
+        const currentText = texts[textIndex];
+
+        if (isDeleting) {
+            typingEl.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingEl.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let speed = isDeleting ? 30 : 70;
+
+        if (!isDeleting && charIndex === currentText.length) {
+            speed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            speed = 500;
+        }
+
+        setTimeout(typeEffect, speed);
+    }
+    typeEffect();
+
+    // === SCROLL REVEAL ===
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // === NAV SCROLL ===
+    const nav = document.querySelector('.nav-glass');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+
+        // Active nav link
+        const sections = document.querySelectorAll('section[id]');
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // === SMOOTH SCROLL ===
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // === MOBILE MENU ===
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // === CONTACT FORM ===
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        this.reset();
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 4000);
+    });
+
+    // === COUNTER ANIMATION ===
+    function animateCounters() {
+        document.querySelectorAll('.stat-number').forEach(el => {
+            const text = el.textContent;
+            const num = parseInt(text.replace(/[^0-9]/g, ''));
+            const suffix = text.replace(/[0-9]/g, '');
+            const prefix = text.match(/^[^0-9]*/)[0];
+            let current = 0;
+            const step = Math.ceil(num / 60);
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= num) {
+                    current = num;
+                    clearInterval(timer);
+                }
+                el.textContent = prefix + current + suffix;
+            }, 25);
+        });
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.stat-number');
+    if (statsSection) {
+        statsObserver.observe(statsSection.closest('.grid'));
+    }
+</script>
+
+</body>
+</html>

@@ -683,31 +683,6 @@
             75% { transform: rotate(2deg) translate(-10px, -5px); }
         }
 
-        /* === TOAST === */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            z-index: 999;
-            padding: 14px 28px;
-            background: rgba(0,229,199,0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0,229,199,0.3);
-            border-radius: 14px;
-            color: var(--accent);
-            font-family: 'Tajawal', sans-serif;
-            font-weight: 500;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
         /* === HEXAGON PATTERN === */
         .hex-pattern {
             position: absolute;
@@ -756,6 +731,35 @@
             .btn-accent:hover { transform: none; }
             .btn-accent:active { transform: scale(0.97); }
             .group:hover .group-hover\:scale-110 { transform: none; }
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 999;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: whatsappPulse 2s ease-in-out infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+        }
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37,211,102,0.7); }
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float { width: 48px; height: 48px; bottom: 16px; left: 16px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1271,7 +1275,7 @@
                         </div>
                         <div>
                             <div class="text-white font-bold text-sm mb-1">اتصل بي</div>
-                            <div class="text-[rgba(224,232,240,0.5)] text-sm" dir="ltr">+970 59 000 0000</div>
+                            <div class="text-[rgba(224,232,240,0.5)] text-sm" dir="ltr">+962 7 8182 1736</div>
                         </div>
                     </div>
 
@@ -1306,7 +1310,7 @@
                         <a href="#" class="glass-card w-12 h-12 flex items-center justify-center hover:!border-[rgba(0,229,199,0.4)]">
                             <iconify-icon icon="mdi:instagram" width="20" style="color: rgba(224,232,240,0.6);"></iconify-icon>
                         </a>
-                        <a href="#" class="glass-card w-12 h-12 flex items-center justify-center hover:!border-[rgba(0,229,199,0.4)]">
+                        <a href="https://wa.me/962781821736" target="_blank" rel="noopener" class="glass-card w-12 h-12 flex items-center justify-center hover:!border-[rgba(0,229,199,0.4)]">
                             <iconify-icon icon="mdi:whatsapp" width="20" style="color: rgba(224,232,240,0.6);"></iconify-icon>
                         </a>
                     </div>
@@ -1372,11 +1376,10 @@
     </div>
 </footer>
 
-<!-- Toast -->
-<div class="toast" id="toast">
-    <iconify-icon icon="solar:check-circle-bold-duotone" width="20"></iconify-icon>
-    <span>تم إرسال طلبك بنجاح! سأتواصل معك قريباً</span>
-</div>
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/962781821736" target="_blank" rel="noopener" class="whatsapp-float" aria-label="تواصل عبر واتساب">
+    <iconify-icon icon="mdi:whatsapp" width="26" style="color: white;"></iconify-icon>
+</a>
 
 <script>
     // === PARTICLES ===
@@ -1531,15 +1534,16 @@
         document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
     }
 
-    // === CONTACT FORM ===
+    // === CONTACT FORM → WhatsApp ===
     document.getElementById('contactForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
+        const name = this.querySelector('input[type="text"]').value.trim();
+        const email = this.querySelector('input[type="email"]').value.trim();
+        const type = this.querySelector('select').value;
+        const details = this.querySelector('textarea').value.trim();
+        const msg = `*طلب مشروع جديد*%0A%0A*الاسم:* ${name}%0A*البريد:* ${email}%0A*نوع المشروع:* ${type}%0A*التفاصيل:* ${details}`;
+        window.open(`https://wa.me/962781821736?text=${msg}`, '_blank');
         this.reset();
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 4000);
     });
 
     // === COUNTER ANIMATION ===
